@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage('Checkout') {
@@ -9,21 +13,27 @@ pipeline {
             }
         }
 
-        stage('Maven Build') {
+        stage('Maven Test') {
             steps {
-                sh 'mvn clean package'
+                bat 'mvn clean test'
+            }
+        }
+
+        stage('Maven Package') {
+            steps {
+                bat 'mvn package -DskipTests'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t hello-java:latest .'
+                bat 'docker build -t student-mgmt:latest .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run --rm hello-java:latest'
+                bat 'docker run --rm student-mgmt:latest'
             }
         }
     }

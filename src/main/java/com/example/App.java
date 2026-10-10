@@ -1,7 +1,12 @@
 package com.example;
 
 public class App {
+
+    public String getGreeting() {
+        return "Hello World!";
+    }
+
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println(new App().getGreeting());
     }
 }// Jenkins auto trigger test
